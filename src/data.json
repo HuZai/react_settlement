@@ -1,0 +1,184 @@
+{
+  "retCode": 0,
+  "ticket": {
+    "title": "优惠券",
+    "ticketId": 47534578,
+    "valueDesc": "满599减120",
+    "subTitle": "1张可用",
+    "canUseTicketList": [{
+      "isChoose": false,
+      "name": "不使用优惠券",
+      "ticketId": "-1"
+    }, {
+      "amount": 120,
+      "ticketSn": "133807810",
+      "ticketId": 47534578,
+      "useDateDesc": "有效期至2016-12-31",
+      "isChoose": true,
+      "desc": "满599减120"
+    }],
+    "canotUseTicketList": {}
+  },
+  "cart": {
+    "currency": 0,
+    "isUpAuction": false,
+    "prices": {
+      "totalSecooPriceDesc": "商品金额：",
+      "totalCount": 2,
+      "priceDetail": [{
+        "name": "优惠券",
+        "value": "- ￥120"
+      }],
+      "realCurrentTotalPrice": "118209",
+      "totalFavoredAmount": "120",
+      "realCurrTotalPriceDesc": "应付金额: ",
+      "totalSecooPrice": "118329"
+    },
+    "cartItems": {
+      "commonCartCount": 2,
+      "commonCartItems": [{
+        "productTax": 0,
+        "spec": "颜色：金色",
+        "nowPrice": "103529",
+        "isSpecialProductAsTicket": false,
+        "image": "http:\/\/pic11.secooimg.com\/product\/500\/500\/98\/82\/815299882.jpg",
+        "productId": 815299882,
+        "quantity": 1,
+        "name": "Glashutte Original(格拉苏蒂) #PANO CLASSIC系列男士自动机械腕表",
+        "isSpecificForUserDiscount": false,
+        "packageId": 0
+      }, {
+        "productTax": 0,
+        "spec": "颜色：卡其色",
+        "nowPrice": "14800",
+        "isSpecialProductAsTicket": false,
+        "image": "http:\/\/pic11.secooimg.com\/product\/500\/500\/42\/30\/15214230.jpg",
+        "productId": 15214230,
+        "quantity": 1,
+        "name": "GUCCI(古驰) 卡其色PVC红\/粉配皮两用包",
+        "isSpecificForUserDiscount": false,
+        "packageId": 0
+      }]
+    }
+  },
+  "shippingInfo": {
+    "address": "浙江省杭州市市辖区哦快快快吗",
+    "phone": "18600958531",
+    "onlyPickup": false,
+    "name": "看看",
+    "shippingId": 427546
+  },
+  "invoice": {
+    "invoiceParam": {
+      "invoiceType": -1,
+      "invoiceTitle": " "
+    },
+    "invoiceTypeList": [{
+      "invoiceType": "-1",
+      "invoiceTitle": "",
+      "name": "不开发票",
+      "isChoose": true
+    }, {
+      "invoiceType": "0",
+      "invoiceTitle": "",
+      "name": "个人",
+      "isChoose": false
+    }, {
+      "invoiceType": "1",
+      "invoiceTitle": "",
+      "name": "公司",
+      "isChoose": false
+    }],
+    "valueDesc": "不开发票",
+    "subTitle": "",
+    "title": "发票"
+  },
+  "kupay": {
+    "canUse": true,
+    "title": "库币",
+    "isChoose": false,
+    "subTitle": "3库币可用",
+    "valueDesc": "不使用库币",
+    "canUseAmount": "3"
+  },
+  "deliverType": {
+    "chooseDeliverTypes": [{
+      "deliverTypeTempls": [{
+        "pickUpReduce": 0,
+        "vendorWarehouseId": "",
+        "label": "快递送货",
+        "isChoose": true,
+        "deliverType": 1
+      }, {
+        "pickUpReduce": 0,
+        "vendorWarehouseId": "2",
+        "label": "到北京自提",
+        "isChoose": false,
+        "desc": [{
+          "name": "BEIJING ",
+          "value": "北京跨境体验店"
+        }, {
+          "name": "体验店地址：",
+          "value": "中国北京市东城区金宝街18-8号"
+        }, {
+          "name": "营业时间：",
+          "value": "10:00-21:00"
+        }, {
+          "name": "贵宾专线：",
+          "value": "010-65287779"
+        }],
+        "deliverType": 0
+      }, {
+        "pickUpReduce": 0,
+        "vendorWarehouseId": "3",
+        "label": "到上海自提",
+        "isChoose": false,
+        "desc": [{
+          "name": "SHAGNHAI ",
+          "value": "上海跨境体验店"
+        }, {
+          "name": "体验店地址：",
+          "value": "中国 上海市 南京西路758号"
+        }, {
+          "name": "营业时间：",
+          "value": "10:00-21:00"
+        }, {
+          "name": "贵宾专线：",
+          "value": "021-62627779"
+        }],
+        "deliverType": 0
+      }, {
+        "pickUpReduce": 0,
+        "vendorWarehouseId": "4",
+        "label": "到成都自提",
+        "isChoose": false,
+        "desc": [{
+          "name": "CHENGDU ",
+          "value": "成都跨境体验店"
+        }, {
+          "name": "体验店地址：",
+          "value": "中国 成都市 人民南路111号航天科技大厦3层"
+        }, {
+          "name": "营业时间：",
+          "value": "10:00-21:00"
+        }, {
+          "name": "贵宾专线：",
+          "value": "028-65111118"
+        }],
+        "deliverType": 0
+      }],
+      "deliverTypeId": "0_0_0",
+      "title": "大陆商品",
+      "cartItems": [{
+        "image": "http:\/\/pic11.secooimg.com\/product\/500\/500\/98\/82\/815299882.jpg",
+        "name": "Glashutte Original(格拉苏蒂) #PANO CLASSIC系列男士自动机械腕表"
+      }, {
+        "image": "http:\/\/pic11.secooimg.com\/product\/500\/500\/42\/30\/15214230.jpg",
+        "name": "GUCCI(古驰) 卡其色PVC红\/粉配皮两用包"
+      }]
+    }],
+    "valueDesc": "快递送货",
+    "title": "配送方式",
+    "deliverTypeParam": {}
+  }
+}

@@ -1,0 +1,25 @@
+@import "../base/init";
+@import "../base/libs/secoo_btn";
+
+/*----------按钮规范------------*/
+.secoo_btn{
+  position: relative;
+  display: block;
+  font-size: $btn_font_size;
+  line-height: $btn_height;
+  padding: 0 $btn_padd;
+  text-align: center;
+  text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  @extend .no_select;
+  -webkit-appearance: none;
+  &:focus {
+    outline: 0;
+  }
+}
+
+@import "btn_default";
+@import "btn_min";
+@import "btn_min_red";
+@import "btn_min_rim";
+@import "btn_min_rim_red";

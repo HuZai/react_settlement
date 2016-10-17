@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>React Webpack Template Title</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+<div id="app">APPLICATION 2222222CONTENT</div>
+<div>eeee22e</div>
+<script>
+  function ajax(options) {
+    options = options || {};
+    options.type = (options.type || "GET").toUpperCase();
+
+    options.dataType = options.dataType || "json";
+    if(!options.headers){
+      var headerJson={
+        'upk':getCookie('Sid'),
+        'app-ver':'5.6.0',
+        'channel':getCookie('channel'),
+        'platform-type':'2'
+      }
+      options.headers=headerJson;
+    }
+    var headers = options.headers || {}, params = formatParams(options.data);
+
+    //创建 - 非IE6 - 第一步
+    if (window.XMLHttpRequest) {
+      var xhr = new XMLHttpRequest();
+    } else { //IE6及其以下版本浏览器
+      var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+
+    //接收 - 第三步
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        var status = xhr.status;
+        if (status >= 200 && status < 300) {
+          options.success && options.success(xhr.responseText, xhr.responseXML);
+        } else {
+          options.fail && options.fail(status);
+        }
+      }
+    }
+
+    //连接 和 发送 - 第二步
+    if (options.type == "GET") {
+      xhr.open("GET", options.url + "?" + params, true);
+      for(var key in headers){
+        xhr.setRequestHeader(key,headers[key])
+      }
+      xhr.send(null);
+    } else if (options.type == "POST") {
+      xhr.open("POST", options.url, true);
+      //设置表单提交时的内容类型
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      for(var key in headers){
+        xhr.setRequestHeader(key,headers[key])
+      }
+      xhr.send(params);
+    }
+  }
+  //格式化参数
+  function formatParams(data) {
+    var arr = [];
+    for (var name in data) {
+      arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]));
+    }
+    arr.push(("v=" + Math.random()).replace(".",""));
+    return arr.join("&");
+  }
+  function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    if (arr = document.cookie.match(reg)) return unescape(arr[2]);
+    else return null;
+  }
+  var urls='http://las.secoo.com/api/cart/confirm?upk=c33b86724be5464090d1eabcec07cf8b%7C14002435405%7C45e71fd8d4e64cb7ac97294c771c40af%7CA8F8214D18173560995D1FEA8A6D3490&c_app_ver=5.6.0&channel=1jie%3Futm_source%3Dsecooneirong&platform-type=2&cart=%7B%22cartType%22%3A%22%22%2C%22shippingParam%22%3A%7B%7D%2C%22aid%22%3A%225%22%2C%22ticketParam%22%3A%7B%7D%2C%22customsParam%22%3A%7B%7D%2C%22invoiceParam%22%3A%7B%7D%2C%22deliverTypeParam%22%3A%7B%7D%7D&_=1476669033929&callback=jsonp1'
+  var cart={"cartType":"","aid":"5","ticketParam":{},"customsParam":{},"deliverTypeParam":[]};
+  ajax({
+    url: urls,              //请求地址
+    type: "get",                       //请求方式
+    data: {cart: JSON.stringify(cart)},        //请求参数
+    dataType: "json",
+    success: function (response, xml) {
+      // 此处放成功后执行的代码
+      console.log(response)
+    },
+    fail: function (status) {
+      // 此处放失败后执行的代码
+    }
+  });
+</script>
+</body>
+</html>

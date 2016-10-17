@@ -1,0 +1,33 @@
+/*----------按钮规范 基础设置------------*/
+//字体颜色
+$font_color:#ffffff;
+$font_color_1:#1A191E;
+$font_color_2:#E93B39;
+$font_color_3:#BBBBBB;
+//字体大小
+$btn_font_size:16px;
+$btn_font_size_1:13px;
+//背景
+$btn_color:#1A191E;
+$btn_color_1:#48474B;
+$btn_color_2:#DDDDDD;
+
+$btn_color_3: #f5f5f5;
+$btn_color_4:#E93B39;
+$btn_color_5:#ED6261;
+
+$btn_color_6:transparent;
+
+//边线
+$btn_border:#1A191E;
+$btn_border_1:#E93B39;
+$btn_border_2:#DDDDDD;
+
+//高度
+$btn_height:reckon(90rem);
+$btn_height_1:reckon(56rem);
+
+//按钮宽度
+$btn_minWidth:reckon(120rem)!default;
+$btn_padd:5px!default;
+

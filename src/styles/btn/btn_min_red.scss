@@ -1,0 +1,11 @@
+/*----------按钮规范min—red------------*/
+.secoo_btn_min_red{
+  @extend .secoo_btn_min;
+  background-color: $btn_color_4;
+  &:visited{
+    background-color: $btn_color_4;
+  }
+  &:active{
+    background-color: $btn_color_5;
+  }
+}

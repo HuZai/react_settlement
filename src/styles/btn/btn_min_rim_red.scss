@@ -1,0 +1,8 @@
+/*----------按钮规范----min-rim-red------*/
+.secoo_btn_min_rim_red{
+  @extend .secoo_btn_min_rim;
+  color: $font_color_2;
+  &:after {
+    border: 1px solid $btn_border_1;
+  }
+}

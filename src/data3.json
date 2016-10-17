@@ -1,0 +1,159 @@
+{
+  "ticket": {
+    "valueDesc": "无可用优惠券",
+    "canUseTicketList": {},
+    "title": "优惠券",
+    "canotUseTicketList": {}
+  },
+  "retCode": 0,
+  "shippingInfo": {
+    "address": "",
+    "phone": "",
+    "onlyPickup": false,
+    "name": "",
+    "shippingId": 0
+  },
+  "invoice": {
+    "invoiceParam": {
+      "invoiceType": -1,
+      "invoiceTitle": " "
+    },
+    "invoiceTypeList": [],
+    "valueDesc": "不开发票",
+    "subTitle": "",
+    "title": "发票"
+  },
+  "cart": {
+    "currency": 0,
+    "isUpAuction": false,
+    "prices": {
+      "totalSecooPriceDesc": "商品金额：",
+      "totalCount": 2,
+      "priceDetail": [],
+      "realCurrentTotalPrice": "0",
+      "totalFavoredAmount": "0",
+      "realCurrTotalPriceDesc": "应付金额: ",
+      "totalSecooPrice": "0"
+    },
+    "cartItems": {
+      "commonCartCount": 2,
+      "commonCartItems": [{
+        "productTax": 0,
+        "spec": "尺码：ML 颜色：黑色",
+        "nowPrice": "204",
+        "isSpecialProductAsTicket": false,
+        "image": "http:\/\/pic11.secooimg.com\/product\/500\/500\/61\/61\/20156161.jpg",
+        "productId": 20156161,
+        "quantity": 1,
+        "name": "Alice\/爱丽丝 hyysop商品0420 波西米亚",
+        "isSpecificForUserDiscount": false,
+        "packageId": 0
+      }, {
+        "productTax": 0,
+        "spec": "颜色：白色",
+        "nowPrice": "123",
+        "isSpecialProductAsTicket": false,
+        "image": "http:\/\/pic11.secooimg.com\/product\/500\/500\/49\/01\/20154901.jpg",
+        "productId": 20154901,
+        "quantity": 1,
+        "name": "腕表多规格",
+        "isSpecificForUserDiscount": false,
+        "packageId": 0
+      }]
+    }
+  },
+  "deliverType": {
+    "chooseDeliverTypes": [{
+      "deliverTypeTempls": [{
+        "isChoose": true,
+        "name": "快递送货",
+        "deliverType": 1
+      }, {
+        "pickUpList": [{
+          "details": [{
+            "name": "自提地址：",
+            "value": "北京市东城区金宝街18-8号"
+          }, {
+            "name": "营业时间：",
+            "value": "10:00-21:00"
+          }, {
+            "name": "贵宾专线：",
+            "value": "010-65287779"
+          }],
+          "vendorWarehouseId": "2",
+          "name": "[北京会所]北京市东城区金宝街18-8号",
+          "isChoose": false
+        }, {
+          "details": [{
+            "name": "自提地址：",
+            "value": "上海市静安区南京西路758号汇银大厦3F"
+          }, {
+            "name": "营业时间：",
+            "value": "10:00-21:00"
+          }, {
+            "name": "贵宾专线：",
+            "value": "021-62627779"
+          }],
+          "vendorWarehouseId": "3",
+          "name": "[上海会所]上海市静安区南京西路758号汇银大厦3F",
+          "isChoose": false
+        }, {
+          "details": [{
+            "name": "自提地址：",
+            "value": "成都市人民南路111号航天科技大厦3层"
+          }, {
+            "name": "营业时间：",
+            "value": "10:00-21:00"
+          }, {
+            "name": "贵宾专线：",
+            "value": "028-65111118"
+          }],
+          "vendorWarehouseId": "4",
+          "name": "[成都会所]成都市人民南路111号航天科技大厦3层",
+          "isChoose": false
+        }],
+        "isChoose": false,
+        "remind": "线上支付20%订金，自提时支付余款",
+        "name": "体验店自提",
+        "deliverType": 0
+      }],
+      "deliverTypeId": "0_0_0",
+      "title": "大陆商品",
+      "cartItems": [{
+        "image": "http:\/\/pic11.secooimg.com\/product\/500\/500\/49\/01\/20154901.jpg",
+        "name": "腕表多规格"
+      }]
+    }, {
+      "deliverTypeTempls": [{
+        "isChoose": true,
+        "name": "快递送货",
+        "deliverType": 1
+      }, {
+        "pickUpList": [{
+          "details": [{
+            "name": "test"
+          }, {
+            "name": "自提地址：",
+            "value": "test"
+          }],
+          "vendorWarehouseId": "291",
+          "name": "[test]test",
+          "isChoose": false
+        }],
+        "isChoose": false,
+        "remind": "在线支付全款",
+        "name": "自提点自提",
+        "deliverType": 0
+      }],
+      "deliverTypeId": "0_1_1000321",
+      "title": "在库商品1",
+      "cartItems": [{
+        "image": "http:\/\/pic11.secooimg.com\/product\/500\/500\/61\/61\/20156161.jpg",
+        "name": "Alice\/爱丽丝 hyysop商品0420 波西米亚"
+      }]
+    }],
+    "valueDesc": "快递送货",
+    "title": "配送方式",
+    "deliverTypeParam": {}
+  }
+}

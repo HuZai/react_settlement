@@ -1,0 +1,8 @@
+/*----------按钮规范------------*/
+.secoo_btn_min{
+  @extend .secoo_btn_default;
+  min-width: $btn_minWidth;
+  display: inline-block;
+  font-size: $btn_font_size_1;
+  line-height: $btn_height_1;
+}

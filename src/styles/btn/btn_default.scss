@@ -1,0 +1,20 @@
+/*----------按钮规范------------*/
+.secoo_btn_default{
+  background-color: $btn_color;
+  color: $font_color;
+  &:visited{
+    background-color:$btn_color;
+  }
+  &:active{
+    background-color: $btn_color_1;
+  }
+  &.disabled{
+    background-color:$btn_color_2;
+  }
+  &.disabled:visited{
+    background-color:$btn_color_2;
+  }
+  &.disabled:active{
+    background-color:$btn_color_2;
+  }
+}

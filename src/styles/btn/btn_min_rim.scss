@@ -1,0 +1,42 @@
+/*----------按钮规范-rim-----------*/
+.secoo_btn_min_rim{
+  color: $font_color_1;
+  display: inline-block;
+  vertical-align: top;//顶部对其
+  font-size: $btn_font_size_1;
+  line-height: $btn_height_1;
+  min-width: $btn_minWidth;
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  &:after {
+    content: " ";
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid $btn_border;
+    transform: scale(.5);
+    transform-origin: 0 0;
+    box-sizing: border-box;
+  }
+  &:active{
+    background-color: $btn_color_2;
+  }
+  &.disabled{
+    background-color:$btn_color_6;
+    color: $font_color_3;
+    &:after{
+      border: 1px solid $btn_border_2;
+    }
+  }
+  &.disabled:visited{
+    background-color:$btn_color_6;
+    color: $font_color_3;
+  }
+  &.disabled:active{
+    background-color:$btn_color_6;
+    color: $font_color_3;
+  }
+}
