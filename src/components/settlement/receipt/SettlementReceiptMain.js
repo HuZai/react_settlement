@@ -32,13 +32,12 @@ class SettlementReceiptMain extends React.Component {
   receiptSubmit(){ // 提交
     var invoice = this.getSelectData(), invoiceParam={},_t=this;
     if(invoice.invoiceType == 1){
-      invoiceParam.invoiceMemo=this.refs.companyInput.value;
+      invoiceParam.invoiceTitle=this.refs.companyInput.value;
     }
-    invoiceParam.invoiceTitle=invoice.invoiceTitle;
     invoiceParam.invoiceType=invoice.invoiceType;
 
     console.log({"invoiceParam":invoiceParam});
-    _t.context.router.push(
+    _t.context.router.replace(
       {pathname: '/index.html',
         query: { cart: webCommon.setSettlemntParam({"invoiceParam":invoiceParam})},
         //state: {shippingInfo:{zitiForm:false},customsInfo:{showCardForm:false}}

@@ -16,7 +16,7 @@ class SettlementDeliveryConfirm extends React.Component{
       let deliverTypeTempls = chooseDeliverTypes[i].deliverTypeTempls;
       for(let j = 0; j < deliverTypeTempls.length; j++){
         if(deliverTypeTempls[j].isChoose){
-          paramAry[i].deliverType = deliverTypeTempls[j].deliverType;
+          paramAry[i].deliverType = deliverTypeTempls[j].deliverType+'';
           if(deliverTypeTempls[j].deliverType == 0){
             let pickUpList = deliverTypeTempls[j].pickUpList;
             for(let k = 0; k < pickUpList.length; k++){
@@ -32,7 +32,7 @@ class SettlementDeliveryConfirm extends React.Component{
     console.log(webCommon.setSettlemntParam({deliverTypeParam:paramAry}));
     _t.context.router.push(
       {pathname: '/index.html',
-        query: { cart: webCommon.setSettlemntParam({deliverTypeParam:paramAry})},
+        query: { cart: webCommon.setSettlemntParam({deliverTypeParam:paramAry})}
         //state: {shippingInfo:{zitiForm:false},customsInfo:{showCardForm:false}}
       }
     )

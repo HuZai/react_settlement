@@ -15,7 +15,7 @@ class SettlementTicketList extends React.Component {
   componentDidUpdate(){
     let _t=this;
     //webCommon.
-      _t.context.router.push(
+      _t.context.router.replace(
         {pathname: '/index.html',
           query: { cart: webCommon.setSettlemntParam({"ticketParam":{"ticketId":_t.getSelectData().ticketId}})},
           //state: {shippingInfo:{zitiForm:false},customsInfo:{showCardForm:false}}

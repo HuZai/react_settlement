@@ -14,13 +14,12 @@ import Shade from 'components/settlement/Shade';
 import ShadeForm from 'components/settlement/ShadeForm';
 import {Router,Route,History} from 'react-router';
 import webCommon from 'actions/common';
-
 import settementAction from '../actions/settementAction';
-
+import Header from 'components/settlement/header/Header';
 class Settlement extends React.Component {
   constructor(props) {
     super(props);
-    this.state={retCode:0,cart:{}};
+    this.state=this.props.location.state? this.props.location.state:{retCode:0,cart:{}};
     this.cartParam='{"cartType":"","shippingParam":{},"aid":"5","ticketParam":{},"customsParam":{},"invoiceParam":{},"deliverTypeParam":{}}';
     this.closeOther=this.closeOther.bind(this);
     this.callForm=this.callForm.bind(this);
@@ -32,6 +31,9 @@ class Settlement extends React.Component {
   init(){
     let dataJson=this.state;
     let items=[],footerPrice=[],otherItems=[];
+    items.push(
+      <Header data={{title:'结算中心'}} key='header_0'/>
+    )
     if(dataJson && dataJson.retCode==0){
       //配送方式
         if(dataJson.deliverType){
@@ -47,35 +49,35 @@ class Settlement extends React.Component {
               items.push(<SettlementCreateAddress data={dataJson.shippingInfo} key='3'  callForm={this.callForm}/>)
             }
             if(dataJson.otherInfo && dataJson.otherInfo.zitiForm){
-              otherItems.push(<ShadeForm data={dataJson.shippingInfo} type='1' saveAddressClick={this.saveAddressClick} closeOther={this.closeOther}/>)
+              otherItems.push(<ShadeForm data={dataJson.shippingInfo} type='1' saveAddressClick={this.saveAddressClick} closeOther={this.closeOther} key='1_1'/>)
             }
         }
       //身份信息处理
         if(dataJson.customsInfo){
             if(!dataJson.customsInfo.cardNo){
-              items.push(<BtnBarA data={{'name':'身份证号','text':'添加收货人身份证号以便清关','gray':true,clickType:'1'}} btnClick={this.btnClick} callForm={()=>this.callForm}/>)
+              items.push(<BtnBarA data={{'name':'身份证号','text':'添加收货人身份证号以便清关','gray':true,clickType:'1'}} btnClick={this.btnClick} callForm={()=>this.callForm} key='4'/>)
             }else{
-              items.push(<BtnBarDiv data={{'name':'身份证号','text':dataJson.customsInfo.cardNo,'hide':true}} />)
+              items.push(<BtnBarDiv data={{'name':'身份证号','text':dataJson.customsInfo.cardNo,'hide':true}} key='5' />)
             }
             if(dataJson.otherInfo && dataJson.otherInfo.showCardForm){
-              otherItems.push(<ShadeForm data={dataJson.customsInfo} type='2' saveAddressClick={this.saveAddressClick} closeOther={this.closeOther}/>)
+              otherItems.push(<ShadeForm data={dataJson.customsInfo} type='2' saveAddressClick={this.saveAddressClick} closeOther={this.closeOther} key='1_2'/>)
             }
         }
-        items.push(<div className='line-color'></div>)//添加收货分割线
+        items.push(<div className='line-color' key='line1'></div>)//添加收货分割线
       //优惠券
         if(dataJson.ticket){
           if(dataJson.ticket.canUse){//
-            items.push(<BtnBarA data={{'name':'优惠券','text':dataJson.ticket.valueDesc,clickType:'2'}} btnClick={this.btnClick} />)//可单击
+            items.push(<BtnBarA data={{'name':'优惠券','text':dataJson.ticket.valueDesc,clickType:'2'}} btnClick={this.btnClick} key='6'/>);//可单击
           }else{
-            items.push(<BtnBarDiv data={{'name':'优惠券','text':dataJson.ticket.valueDesc,'hide':true}} />)//不可单击
+            items.push(<BtnBarDiv data={{'name':'优惠券','text':dataJson.ticket.valueDesc,'hide':true}} key='7'/>);//不可单击
           }
         }
         //发票信息
         if(dataJson.invoice){
           if(dataJson.invoice.invoiceTypeList){//是否支持发票(海外商品不支持)
-            items.push(<BtnBarA data={{'name':'发票','text':dataJson.invoice.valueDesc,clickType:'3'}} btnClick={this.btnClick}/>)
+            items.push(<BtnBarA data={{'name':'发票','text':dataJson.invoice.valueDesc,clickType:'3'}} btnClick={this.btnClick} key='8'/>)  ;
           }else{
-            items.push(<BtnBarDiv data={{'name':'发票','text':dataJson.invoice.valueDesc,'hide':true}} />)
+            items.push(<BtnBarDiv data={{'name':'发票','text':dataJson.invoice.valueDesc,'hide':true}} key='9' />);
           }
         }
         //商品信息
@@ -84,16 +86,16 @@ class Settlement extends React.Component {
           if(dataJson.cart.cartItems.commonCartCount>1){//多个商品
             items.push(
               <div className="mt20">
-                <BtnBarDiv data={{'name':titles,'text':'','hide':true}} />
-                <SettlementImgList data={dataJson.cart.cartItems}/>
+                <BtnBarDiv data={{'name':titles,'text':'','hide':true}} key='10'/>
+                <SettlementImgList data={dataJson.cart.cartItems} key='10_1' btnClick={()=>this.btnClick('4')}/>
               </div>
 
             )
           }else{//1个商品
             items.push(
               <div className="mt20">
-                <BtnBarDiv data={{'name':titles,'text':'','hide':true}} />
-                <SettlementProdDetail data={dataJson.cart.cartItems}/>
+                <BtnBarDiv data={{'name':titles,'text':'','hide':true}} key='11'/>
+                <SettlementProdDetail data={dataJson.cart.cartItems} key='11_1'/>
               </div>
             )
           }
@@ -101,15 +103,15 @@ class Settlement extends React.Component {
         //结算金额信息
         if(dataJson.cart.prices){
           items.push(
-            <SettlementTextList data={dataJson.cart.prices}/>
-          )
+            <SettlementTextList data={dataJson.cart.prices} key='12'/>
+          );
           footerPrice.push(//底部金额处理
-            <SettlementFooter data={dataJson.cart.prices} commitOrder={()=>this.commitOrder()} btnState={this.state.btnState}/>
-          )
+            <SettlementFooter data={dataJson.cart.prices} commitOrder={()=>this.commitOrder()} btnState={this.state.btnState} key='13'/>
+          );
         }
       return(
         <div className="page-view selected">
-          <div className='page-content'>
+          <div className='page-content' key='box'>
             {items}
           </div>
           <div>
@@ -120,10 +122,45 @@ class Settlement extends React.Component {
       </div>
       )
     }else{
-      alert("商品已提交");
+      alert(dataJson.retMsg);
     }
   }
+  dataPriceAction(data){
+    function formatNum(num, n){
 
+      var numStr = num.toString(),
+        pointIndex = numStr.indexOf('.'),
+        beforePoint,
+        afterPoint;
+      if(pointIndex < 0){
+        beforePoint = numStr;
+        afterPoint = '';
+      }else{
+        beforePoint = numStr.substring(0, pointIndex);
+        if(typeof n == 'undefined'){
+          afterPoint = numStr.substring(pointIndex);
+        }else{
+          afterPoint = numStr.substring(pointIndex, pointIndex + n + 1);
+        }
+      }
+      var re = /(-?\d+)(\d{3})/;
+      while(re.test(beforePoint)){
+        beforePoint = beforePoint.replace(re,"$1,$2");
+      }
+      return beforePoint + afterPoint;
+    }
+    data.cart.prices.totalSecooPrice='￥'+formatNum(data.cart.prices.totalSecooPrice,2);
+    data.cart.prices.realCurrentTotalPrice='￥'+formatNum(data.cart.prices.realCurrentTotalPrice,2);
+    if(data.cart.prices.totalFavoredAmount){
+      data.cart.prices.totalFavoredAmount='￥'+formatNum(data.cart.prices.totalFavoredAmount,2);
+    }
+    for(var key in data.cart.cartItems.commonCartItems){
+      console.log(data.cart.cartItems.commonCartItems[key].nowPrice)
+      data.cart.cartItems.commonCartItems[key].nowPrice='￥'+formatNum(data.cart.cartItems.commonCartItems[key].nowPrice,2);
+    }
+    console.log(data);
+    return data;
+  }
   componentDidUpdate(){
     this.props.location.state=null;
     //let _t=this, cart=webCommon.getQueryString('cart');
@@ -143,6 +180,7 @@ class Settlement extends React.Component {
       cart=cart?cart:this.cartParam;
       settementAction.getData(cart,function(res){
         if(res.retCode==0){
+          res=_t.dataPriceAction(res);
           _t.setState(res);
         }else if(res.retMsg){
           alert(res.retMsg)
@@ -157,7 +195,7 @@ class Settlement extends React.Component {
       if(data && !data.onlyPickup){
         window.location.href='http://m.secoo.com/appActivity/mShipAddress.shtml?cart='+webCommon.setSettlemntParam({"shippingParam":{"shippingId":data.shippingId}});
       }else{
-        this.setState({otherInfo:{showCardForm:true}});
+        this.setState({otherInfo:{zitiForm:true}});
       }
   }
   //保存自体地址,身份证信息 表单
@@ -166,6 +204,7 @@ class Settlement extends React.Component {
       if(data.type=="ziti"){
         settementAction.getData(webCommon.setSettlemntParam({"shippingParam":{"shipping":{"name":data.name,"phone":data.phone,"isPickupShipping":true},shippingId:data.shippingId}}),function(res){
           if(res.retCode==0){
+            res.otherInfo={};
             _t.setState(res);
           }else if(res.errMsg){
             alert(res.errMsg)
@@ -175,6 +214,7 @@ class Settlement extends React.Component {
         if(data.cardNo){
           settementAction.getData(webCommon.setSettlemntParam({"customsParam":{"cardNo":data.cardNo}}),function(res){
             if(res.retCode==0){
+              res.otherInfo={};
               _t.setState(res);
             }else if(res.errMsg){
               alert(res.errMsg)
@@ -229,42 +269,30 @@ class Settlement extends React.Component {
             }
           )
           break;
+        case '4'://多组商品列表
+          this.context.router.push(
+            {pathname: '/SettlementProList?cart='+cart,
+              state: this.state
+            }
+          )
+          break;
       }
   }
   commitOrder(){
     this.setState({btnState:1});
     let _t=this,dataJson=this.state;
     let paramAry = [],chooseDeliverTypes = dataJson.deliverType.chooseDeliverTypes;
-    for(let i = 0; i < chooseDeliverTypes.length; i++){
-      paramAry[i] = {
-        deliverTypeId:chooseDeliverTypes[i].deliverTypeId
-      };
-      let deliverTypeTempls = chooseDeliverTypes[i].deliverTypeTempls;
-      for(let j = 0; j < deliverTypeTempls.length; j++){
-        if(deliverTypeTempls[j].isChoose){
-          paramAry[i].deliverType = deliverTypeTempls[j].deliverType;
-          if(deliverTypeTempls[j].deliverType == 0){
-            let pickUpList = deliverTypeTempls[j].pickUpList;
-            for(let k = 0; k < pickUpList.length; k++){
-              if(pickUpList[k].isChoose){
-                paramAry[i].vendorWarehouseId = pickUpList[k].vendorWarehouseId;
-              }
-            }
-          }
-        }
-      }
-    }
-    console.log({deliverTypeParam:paramAry});
     let cart={"cartType":"","deliverTypeParam":{},"invoiceParam":{},"shippingParam":{"shippingId":0},"ticketParam":{"ticketId":"-1"}};
-    cart.deliverTypeParam=paramAry;
+    cart.deliverTypeParam=dataJson.deliverType.deliverTypeParam;
     cart.invoiceParam=dataJson.invoice.invoiceParam;
     cart.shippingParam.shippingId=dataJson.shippingInfo.shippingId;
     cart.ticketParam.ticketId=dataJson.ticket.ticketId;
-    console.log(JSON.stringify(cart))
     settementAction.commitData(JSON.stringify(cart),function(res){
       _t.setState({btnState:0});
       if(res.retCode==0){
-        window.location.href='http://m.secoo.com/appActivity/mPayment.shtml?orderId='+res.order.orderId+'&prodTotalPrice='+res.order.totalPay;
+        //window.location.href='http://m.secoo.com/appActivity/mPayment.shtml?orderId='+res.order.orderId+'&prodTotalPrice='+res.order.totalPay;
+        window.history.replaceState({orderId:res.order.orderId,prodTotalPrice:res.order.totalPay}, "", "/appActivity/mPayment.shtml");
+        window.history.go();
       }else if(res.retMsg){
         alert(res.retMsg)
       }

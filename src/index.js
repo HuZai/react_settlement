@@ -11,6 +11,7 @@ import SettlementTicketList from './components/settlement/ticket/SettlementTicke
 import SettlementDeliveryMain from './components/settlement/delivery/SettlementDeliveryMain';
 import SettlementProList from './components/settlement/SettlementProList';
 import SettlementReceiptMain from './components/settlement/receipt/SettlementReceiptMain';
+import InvalideProList from './components/settlement/InvalideProList';
 render(
   <Router history={browserHistory}>
     <Route path="/*.html(:cart)" component={App} />
@@ -19,6 +20,7 @@ render(
     <Route path="/delivery(:cart)" component={SettlementDeliveryMain}/>
     <Route path="/SettlementProList(:cart)" component={SettlementProList}/>
     <Route path="/receipt(:cart)" component={SettlementReceiptMain}/>
+    <Route path="/invalide(:cart)" component={InvalideProList}/>
   </Router>
   , document.getElementById('main-page-view')
 );
