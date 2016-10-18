@@ -11,13 +11,14 @@ class SettlementImgList extends React.Component {
     }
     return classNames;
   }
+
   render() {
     let items=[],datas=this.props.data.commonCartItems;
     for(var key in datas){
       items.push(<img src={datas[key].image} key={datas[key].productId} />);
     }
     return (
-      <div className='img_box clell_border'>
+      <div className='img_box clell_border' onClick={this.props.btnClick}>
         <div className='float_div'></div>
         <div className='cell img_list'>
           {items}
