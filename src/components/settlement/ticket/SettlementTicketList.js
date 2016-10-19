@@ -3,27 +3,34 @@
  */
 import React from 'react';
 import TicketItem from 'components/settlement/ticket/SettlementTicketLine';
-import SettlementTicketHeader from 'components/settlement/ticket/SettlementTicketHeader';
+import HeaderCom from 'components/settlement/header/Header';
+import SettlementTicketHeaderForm from 'components/settlement/ticket/SettlementTicketHeaderForm';
 import webCommon from 'actions/common';
+import settementAction from 'actions/settementAction';
 class SettlementTicketList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.props.location.state.ticket;
+    this.confirmClick=this.confirmClick.bind(this);
+    this.state = this.props.location.state;
   }
   componentDidMount(){
   }
   componentDidUpdate(){
     let _t=this;
-    //webCommon.
+    if(this.state.ticket.seleted==true){
       _t.context.router.replace(
         {pathname: '/index.html',
           query: { cart: webCommon.setSettlemntParam({"ticketParam":{"ticketId":_t.getSelectData().ticketId}})},
-          //state: {shippingInfo:{zitiForm:false},customsInfo:{showCardForm:false}}
+          state: _t.state
         }
       )
+    }
+  }
+  activeClick(){//激活处理
+      this.setState({otherInfo:{creatTicket:true}});
   }
   selectItems(ticketId) {
-    let data = this.state,
+    let data = this.state.ticket,
       canUseTicketList = data.canUseTicketList;
     for (let i = 0; i < canUseTicketList.length; i++) {
       if (canUseTicketList[i].ticketId == ticketId) {
@@ -32,10 +39,11 @@ class SettlementTicketList extends React.Component {
         canUseTicketList[i].isChoose = false;
       }
     }
+    data.seleted=true;
     this.setState(data);
   }
   getSelectData() {
-    let data = this.state,
+    let data = this.state.ticket,
       canUseTicketList = data.canUseTicketList;
     for (let i = 0; i < canUseTicketList.length; i++) {
       if (canUseTicketList[i].isChoose) {
@@ -43,12 +51,29 @@ class SettlementTicketList extends React.Component {
       }
     }
   }
+  colseForm(){
+    this.setState({otherInfo:null});
+  }
+  confirmClick(vals) {
+    if(!vals.ticketNum){
+      return;
+    }
+    let _t=this,carts=webCommon.setSettlemntParam({"ticketParam":{"ticketSn":vals.ticketNum}});
+    settementAction.getData(carts,function(data){
+      if(data.retCode==0){
+        data.otherInfo=null;
+        this.setState(data);
+      }else if(data.retMsg){
+        alert(data.retMsg)
+      }
+    });
+  }
   render() {
-    console.log("render")
-    let ticketList = [], ableTicket = [], unableTicket = [];
-    let data = this.state,
+    let ticketList = [], ableTicket = [], unableTicket = [],creatTicket=[];
+    let data = this.state.ticket,
       canUseTicketList = data.canUseTicketList,
       canotUseTicketList = data.canotUseTicketList;
+    console.log("render")
     // 可用优惠券数据
     for (let i = 0; i < canUseTicketList.length; i++) {
       ableTicket.push(
@@ -62,22 +87,28 @@ class SettlementTicketList extends React.Component {
       </div>
     );
     // 不可用优惠券数据
-    for (let j = 0; j < canotUseTicketList.length; j++) {
-      unableTicket.push(
-        <TicketItem listType='0' data={canotUseTicketList[j]} key={j}/>
+    if(canotUseTicketList.length>0){
+      for (let j = 0; j < canotUseTicketList.length; j++) {
+        unableTicket.push(
+          <TicketItem listType='0' data={canotUseTicketList[j]} key={j}/>
+        );
+      }
+      // 不可用优惠券
+      ticketList.push(
+        <div className='unable-ticket-tips' key="unable">
+          <div>不可用优惠券</div>
+          <span>（订单中的特例品不参与优惠券活动）</span>
+        </div>);
+      ticketList.push(
+        <div className='ticket-list unable-ticket-list' key="list1">
+          <ul>{unableTicket}</ul>
+        </div>
       );
     }
-    // 不可用优惠券
-    ticketList.push(
-      <div className='unable-ticket-tips' key="unable">
-        <div>不可用优惠券</div>
-        <span>（订单中的特例品不参与优惠券活动）</span>
-    </div>);
-    ticketList.push(
-      <div className='ticket-list unable-ticket-list' key="list1">
-        <ul>{unableTicket}</ul>
-      </div>
-    );
+    //激活优惠券
+    if(this.state.otherInfo && this.state.otherInfo.creatTicket){
+      creatTicket.push(<SettlementTicketHeaderForm confirmClick={this.confirmClick.bind(this)} closeForm={()=>this.colseForm()}/>)
+    }
     // 没有优惠券
     if (!canUseTicketList.length && !canotUseTicketList.length) {
       ticketList = <div className='ticket-section'>
@@ -89,13 +120,13 @@ class SettlementTicketList extends React.Component {
     }
     return (
       <div>
+        <HeaderCom data={{title:'优惠券',btnDes:'激活'}} rightClick={()=>this.activeClick()}/>
         <div className='page-content'>
-          <header className="header">
-              <SettlementTicketHeader/>
-          </header>
           <div className='ticket-section'>{ticketList}</div>
         </div>
-        <div id="ticket-pops"></div>
+        <div id="ticket-pops">
+          {creatTicket}
+        </div>
       </div>
     )
   }

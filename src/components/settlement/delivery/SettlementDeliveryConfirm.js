@@ -28,8 +28,6 @@ class SettlementDeliveryConfirm extends React.Component{
         }
       }
     }
-    console.log({deliverTypeParam:paramAry});
-    console.log(webCommon.setSettlemntParam({deliverTypeParam:paramAry}));
     _t.context.router.push(
       {pathname: '/index.html',
         query: { cart: webCommon.setSettlemntParam({deliverTypeParam:paramAry})}

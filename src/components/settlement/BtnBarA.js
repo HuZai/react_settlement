@@ -9,6 +9,9 @@ class BtnBar extends React.Component {
     if(!this.props.data.isFrist){//是否是第一个
       classArray.push('clell_border');
     }
+    if(this.props.data.hasMarTop){
+      classArray.push('mt20');
+    }
     if(this.props.data.rightFixed){//右侧固定大小
       classArray.push('delivery-area');
     }

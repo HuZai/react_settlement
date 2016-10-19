@@ -3,31 +3,9 @@ import React from 'react';
 class InvalideProList extends React.Component{
   constructor(props){
     super(props)
-    this.state = {exceptionInventoryList:[{
-      "image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg",
-      "productId":15932046,
-      "quantity":1,
-      "name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674",
-      "status":0
-    },{
-      "image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg",
-      "productId":15932046,
-      "quantity":1,
-      "name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674",
-      "status":0
-    },{
-      "image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg",
-      "productId":15932046,
-      "quantity":1,
-      "name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674",
-      "status":0
-    }]};
-  }
-  closePops(){
-    console.log("关闭");
   }
   render(){
-    let proListAry = [],exceptionInventoryList = this.state.exceptionInventoryList;
+    let proListAry = [],exceptionInventoryList = this.props.data.exceptionInventoryList;
     for(let i = 0; i < exceptionInventoryList.length; i ++){
       proListAry.push(
         <li>
@@ -47,7 +25,7 @@ class InvalideProList extends React.Component{
             {proListAry}
           </ul>
         </div>
-        <div className="mixin-border pops-confirm-btn" onClick={this.closePops}>确定</div>
+        <div className="mixin-border pops-confirm-btn" onClick={()=>this.props.closeOther('faild')}>确定</div>
       </div>
     </div>;
   }

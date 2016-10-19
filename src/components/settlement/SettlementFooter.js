@@ -30,7 +30,7 @@ class SettlementFooter extends React.Component {
       price.push(<div className="pref-amount" key="totalFavoredAmount">优惠金额：{data.totalFavoredAmount}</div>);
     }
     return (
-      <div className="footer-section mt20">
+      <div className="footer-section">
         <div className="footer-section-fixed">
           <div>
             <div className="pay-amount">{data.realCurrTotalPriceDesc}{data.realCurrentTotalPrice}</div>

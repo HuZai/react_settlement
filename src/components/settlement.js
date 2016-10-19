@@ -16,25 +16,28 @@ import {Router,Route,History} from 'react-router';
 import webCommon from 'actions/common';
 import settementAction from '../actions/settementAction';
 import Header from 'components/settlement/header/Header';
+import InvalideProList from 'components/settlement/InvalideProList';
 class Settlement extends React.Component {
   constructor(props) {
     super(props);
-    this.state=this.props.location.state? this.props.location.state:{retCode:0,cart:{}};
+    this.state=this.props.location.state? this.props.location.state:{retCode:0,isLoading:true,cart:{}};
     this.cartParam='{"cartType":"","shippingParam":{},"aid":"5","ticketParam":{},"customsParam":{},"invoiceParam":{},"deliverTypeParam":{}}';
     this.closeOther=this.closeOther.bind(this);
     this.callForm=this.callForm.bind(this);
     this.saveAddressClick=this.saveAddressClick.bind(this);
     this.addressUpdate=this.addressUpdate.bind(this);
     this.btnClick=this.btnClick.bind(this);
-    console.log("--init--");
   }
   init(){
     let dataJson=this.state;
     let items=[],footerPrice=[],otherItems=[];
-    items.push(
-      <Header data={{title:'结算中心'}} key='header_0'/>
-    )
     if(dataJson && dataJson.retCode==0){
+        items.push(<div className="mt20"></div>);
+        if(dataJson.isLoading){
+          items.push(
+            <Shade data={{transparent:true}} ref="shadeBOX"/>
+          )
+        }
       //配送方式
         if(dataJson.deliverType){
           items.push(
@@ -67,9 +70,9 @@ class Settlement extends React.Component {
       //优惠券
         if(dataJson.ticket){
           if(dataJson.ticket.canUse){//
-            items.push(<BtnBarA data={{'name':'优惠券','text':dataJson.ticket.valueDesc,clickType:'2'}} btnClick={this.btnClick} key='6'/>);//可单击
+            items.push(<BtnBarA data={{'name':'优惠券','text':dataJson.ticket.valueDesc,clickType:'2',hasMarTop:true,isFrist:true}} btnClick={this.btnClick} key='6'/>);//可单击
           }else{
-            items.push(<BtnBarDiv data={{'name':'优惠券','text':dataJson.ticket.valueDesc,'hide':true}} key='7'/>);//不可单击
+            items.push(<BtnBarDiv data={{'name':'优惠券','text':dataJson.ticket.valueDesc,'hide':true,hasMarTop:true,isFrist:true}} key='7'/>);//不可单击
           }
         }
         //发票信息
@@ -86,7 +89,7 @@ class Settlement extends React.Component {
           if(dataJson.cart.cartItems.commonCartCount>1){//多个商品
             items.push(
               <div className="mt20">
-                <BtnBarDiv data={{'name':titles,'text':'','hide':true}} key='10'/>
+                <BtnBarDiv data={{'name':titles,'text':'','hide':true,isFrist:true}} key='10'/>
                 <SettlementImgList data={dataJson.cart.cartItems} key='10_1' btnClick={()=>this.btnClick('4')}/>
               </div>
 
@@ -94,7 +97,7 @@ class Settlement extends React.Component {
           }else{//1个商品
             items.push(
               <div className="mt20">
-                <BtnBarDiv data={{'name':titles,'text':'','hide':true}} key='11'/>
+                <BtnBarDiv data={{'name':titles,'text':'','hide':true,isFrist:true}} key='11'/>
                 <SettlementProdDetail data={dataJson.cart.cartItems} key='11_1'/>
               </div>
             )
@@ -109,16 +112,24 @@ class Settlement extends React.Component {
             <SettlementFooter data={dataJson.cart.prices} commitOrder={()=>this.commitOrder()} btnState={this.state.btnState} key='13'/>
           );
         }
+        items.push(<div className="mt20"></div>);
+        //无效商品
+        if(dataJson.otherInfo && dataJson.otherInfo.exceptionInventoryList){
+          otherItems.push(<InvalideProList data={{exceptionInventoryList:dataJson.otherInfo.exceptionInventoryList}} closeOther={this.closeOther} key='13'/>)
+        }
       return(
         <div className="page-view selected">
+          <Header data={{title:'结算中心'}} key='header_0'/>
           <div className='page-content' key='box'>
+
             {items}
           </div>
           <div>
             {footerPrice}
           </div>
-          <Shade />
+
           {otherItems}
+
       </div>
       )
     }else{
@@ -155,10 +166,8 @@ class Settlement extends React.Component {
       data.cart.prices.totalFavoredAmount='￥'+formatNum(data.cart.prices.totalFavoredAmount,2);
     }
     for(var key in data.cart.cartItems.commonCartItems){
-      console.log(data.cart.cartItems.commonCartItems[key].nowPrice)
       data.cart.cartItems.commonCartItems[key].nowPrice='￥'+formatNum(data.cart.cartItems.commonCartItems[key].nowPrice,2);
     }
-    console.log(data);
     return data;
   }
   componentDidUpdate(){
@@ -169,6 +178,7 @@ class Settlement extends React.Component {
     //  console.log(res);
     //  _t.setState(res);
     //})
+    console.log('update------')
   }
   componentDidMount(){
     let dataJson,_t=this;
@@ -181,12 +191,11 @@ class Settlement extends React.Component {
       settementAction.getData(cart,function(res){
         if(res.retCode==0){
           res=_t.dataPriceAction(res);
+          res.isLoading=false;
           _t.setState(res);
         }else if(res.retMsg){
           alert(res.retMsg)
         }
-        console.log(res);
-
       })
     //}
   }
@@ -222,8 +231,6 @@ class Settlement extends React.Component {
           })
         }
       }
-
-      console.log(data);
   }
   //调起地址保存,身份证件填写 表单
   callForm(type){
@@ -239,6 +246,10 @@ class Settlement extends React.Component {
   //关闭地址保存,身份证件填写 表单
   closeOther(type){
     this.setState({otherInfo:''});
+    if(type && type=='faild'){
+      window.history.replaceState('', "", "/shoppingCart.html");
+      window.history.go();
+    }
   }
   //按钮
   btnClick(type){
@@ -282,24 +293,30 @@ class Settlement extends React.Component {
     this.setState({btnState:1});
     let _t=this,dataJson=this.state;
     let paramAry = [],chooseDeliverTypes = dataJson.deliverType.chooseDeliverTypes;
-    let cart={"cartType":"","deliverTypeParam":{},"invoiceParam":{},"shippingParam":{"shippingId":0},"ticketParam":{"ticketId":"-1"}};
+    let cart={"aid":"5","cartType":"","deliverTypeParam":{},"invoiceParam":{},"shippingParam":{"shippingId":0},"ticketParam":{"ticketId":"-1"}};
     cart.deliverTypeParam=dataJson.deliverType.deliverTypeParam;
     cart.invoiceParam=dataJson.invoice.invoiceParam;
     cart.shippingParam.shippingId=dataJson.shippingInfo.shippingId;
     cart.ticketParam.ticketId=dataJson.ticket.ticketId;
+    let res={exceptionInventoryList:[{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0},{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0},{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0}]};
+    //_t.setState({otherInfo:{exceptionInventoryList:res.exceptionInventoryList}});
+    //return false ;
     settementAction.commitData(JSON.stringify(cart),function(res){
       _t.setState({btnState:0});
       if(res.retCode==0){
-        //window.location.href='http://m.secoo.com/appActivity/mPayment.shtml?orderId='+res.order.orderId+'&prodTotalPrice='+res.order.totalPay;
-        window.history.replaceState({orderId:res.order.orderId,prodTotalPrice:res.order.totalPay}, "", "/appActivity/mPayment.shtml");
-        window.history.go();
+        if(res.exceptionInventoryList && res.exceptionInventoryList.length>0){
+             _t.setState({otherInfo:{exceptionInventoryList:res.exceptionInventoryList}});
+        }else{
+          //window.location.href='http://m.secoo.com/appActivity/mPayment.shtml?orderId='+res.order.orderId+'&prodTotalPrice='+res.order.totalPay;
+          window.history.replaceState('', "", "/appActivity/mPayment.shtml?orderId="+res.order.orderId+'&prodTotalPrice='+res.order.totalPay);
+          window.history.go();
+        }
       }else if(res.retMsg){
-        alert(res.retMsg)
+          alert(res.retMsg)
       }
     })
   }
   render() {
-    console.log("render");
     return (
       this.init()
     );
