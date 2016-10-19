@@ -298,7 +298,7 @@ class Settlement extends React.Component {
     cart.invoiceParam=dataJson.invoice.invoiceParam;
     cart.shippingParam.shippingId=dataJson.shippingInfo.shippingId;
     cart.ticketParam.ticketId=dataJson.ticket.ticketId;
-    let res={exceptionInventoryList:[{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0},{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0},{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0}]};
+    //let res={exceptionInventoryList:[{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0},{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0},{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0}]};
     //_t.setState({otherInfo:{exceptionInventoryList:res.exceptionInventoryList}});
     //return false ;
     settementAction.commitData(JSON.stringify(cart),function(res){
@@ -312,7 +312,7 @@ class Settlement extends React.Component {
           window.history.go();
         }
       }else if(res.retMsg){
-          alert(res.retMsg)
+          alert(res.retMsg);
       }
     })
   }
