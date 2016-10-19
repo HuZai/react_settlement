@@ -5,50 +5,35 @@ import React from 'react';
 import webCommon from 'actions/common';
 import settementAction from 'actions/settementAction';
 class SettlementTicketHeaderForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {ticketNum:''};
+  }
   componentDidMount() {
     this.refs.ticketInput.focus();
   }
-
-  closeClick() {
-    document.getElementById("ticket-pops").innerHTML = "";
-  }
-
   disClick(event) {
     event.stopPropagation();
     event.preventDefault();
   }
 
-  confirmClick() {
-    let _t=this,vals=_t.refs.ticketInput.value,carts=webCommon.setSettlemntParam({"ticketParam":{"ticketSn":vals}});
-    settementAction.getData(carts,function(data){
-      if(data.retCode==0){
-        _t.context.router.push(
-          {pathname: '/index.html',
-            query: { cart: carts},
-            state: data
-          }
-        )
-      }else if(data.retMsg){
-        alert(data.retMsg)
-      }
 
-    });
-  }
 
   ticketChange(event) {
+    this.setState({ticketNum:event.target.value});
     this.refs.confirmBtn.classList.toggle("disabled", event.target.value == "");
   }
 
   render() {
-    return <div className="input-pops selected" onClick={this.closeClick.bind(this)}>
-      <div className="input-pops-item ticket-input selected" onClick={this.disClick}>
+    return <div className="input-pops selected">
+      <div className="input-pops-item ticket-input selected" >
         <div className="title-line">
-          <div onClick={this.closeClick} className="left-area secoo_icon_guanbi"></div>
+          <div onClick={this.props.closeForm} className="left-area secoo_icon_guanbi"></div>
           激活优惠券
         </div>
         <input className="mixin-input mt20" onChange={this.ticketChange.bind(this)} type="text" ref="ticketInput"
-               placeholder="请输入优惠码"/>
-        <a href="javascript:;" ref="confirmBtn" onClick={this.confirmClick.bind(this)}
+               placeholder="请输入优惠码" defaultValue={this.state.ticketNum}/>
+        <a href="javascript:;" ref="confirmBtn" onClick={this.props.confirmClick.bind(this,this.state)}
            className="secoo_btn secoo_btn_default disabled">确定</a>
       </div>
     </div>;

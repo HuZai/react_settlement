@@ -9,6 +9,9 @@ class BtnBar extends React.Component {
     if(!this.props.data.isFrist){
       classArray.push('clell_border');
     }
+    if(this.props.data.hasMarTop){
+      classArray.push('mt20');
+    }
     return classArray.join(' ');
   }
   setBtnMark(){

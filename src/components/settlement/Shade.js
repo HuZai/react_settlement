@@ -7,24 +7,25 @@ import React from 'react';
 class SettlementTextList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {classNames: 'mixin-pops'};
+    this.state = {classNames: 'mixin-pops selected'};
   }
-  handleMove(evnet){
+
+  handleMove(evnet) {
+    console.log(evnet);
     event.stopPropagation();
     event.preventDefault();
   }
+
   render() {
-    let datas=this.props.data,styles='';
-    if(datas && datas.none){
-      styles={'background': 'none'}
+    let datas = this.props.data, styles = '';
+    if (datas && datas.transparent) {
+      styles = {'background': 'none'}
     }
     return (
-      <div className={this.state.classNames} style={{styles}} ref="mixin-pops" onTouchMove={this.handleMove}>
+      <div className={this.state.classNames} style={styles} ref="mixin-pops" onTouchMove={this.handleMove.bind(this)}>
       </div>
     );
   }
 }
-SettlementTextList.defaultProps = {
-
-};
+SettlementTextList.defaultProps = {};
 export default SettlementTextList;

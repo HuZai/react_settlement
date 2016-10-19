@@ -5,6 +5,12 @@
 import React from 'react';
 
 class SettlementInput extends React.Component {
+  componentDidMount() {
+    console.log(this.props.data.focus)
+    if(this.props.data.focus && this.props.data.refName){
+      this.refs[this.props.data.refName].focus();
+    }
+  }
   render() {
     let datas=this.props.data;
     return (
