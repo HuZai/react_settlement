@@ -19,14 +19,18 @@ class SettlementDeliveryMain extends React.Component{
       }else{
         deliverTypeTempls[i].isChoose = true;
 
-        // select
-        let pickUpList = deliverTypeTempls[i].pickUpList;
-        if(pickUpList){
-          for(let j = 0; j < pickUpList.length; j++){
-            if(pickUpList[j].vendorWarehouseId == target.value){
-              pickUpList[j].isChoose = true;
-            }else{
-              pickUpList[j].isChoose = false;
+        // 自提处理
+        if(deliverType == 0){
+          let pickUpList = deliverTypeTempls[i].pickUpList;
+          if(pickUpList.length == 1){
+            pickUpList[0].isChoose = true;
+          }else{
+            for(let j = 0; j < pickUpList.length; j++){
+              if(pickUpList[j].vendorWarehouseId == target.value){
+                pickUpList[j].isChoose = true;
+              }else{
+                pickUpList[j].isChoose = false;
+              }
             }
           }
         }
@@ -47,43 +51,55 @@ class SettlementDeliveryMain extends React.Component{
       for(let j = 0; j < deliverTypeTempls.length; j++){
         let deliveryIsChoose = deliverTypeTempls[j].isChoose,
           subClass = deliveryIsChoose?"selected":"";
-        if(deliverTypeTempls[j].deliverType == 0){
-          let picUpAry = [],
-            pickUpList = deliverTypeTempls[j].pickUpList;
-          if(!deliveryIsChoose){
-            picUpAry.push(<option selected="selected" value="">请选择</option>);
+
+        let pickUpList = deliverTypeTempls[j].pickUpList || [],
+            maxList = pickUpList.length == 1;
+        // 非自提
+        if(deliverTypeTempls[j].deliverType != 0 || maxList){
+          deliverySub.push(
+              <li className={subClass} onClick={this.deliverySelect.bind(this,deliverTypeTempls,deliverTypeTempls[j].deliverType)}>
+                <span>{deliverTypeTempls[j].name}</span>
+              </li>
+          );
+        }
+        // 自提
+        if(deliverTypeTempls[j].deliverType == 0) {
+          let picUpAry = [];
+          if(!maxList){
+            if(!deliveryIsChoose){
+              picUpAry.push(<option selected="true" value="">请选择</option>);
+            }
           }
           for(var k = 0; k < pickUpList.length; k++){
-            picUpAry.push(
-              <option selected={pickUpList[k].isChoose && deliveryIsChoose?"selected":false} value={pickUpList[k].vendorWarehouseId}>{pickUpList[k].name}</option>
-            );
+            if(!maxList) {
+              picUpAry.push(
+                  <option selected={pickUpList[k].isChoose && deliveryIsChoose?"selected":false}
+                          value={pickUpList[k].vendorWarehouseId}>{pickUpList[k].name}</option>
+              );
+            }
             if(deliveryIsChoose) {
               if (pickUpList[k].isChoose) {
                 let details = pickUpList[k].details;
                 for (let c = 0; c < details.length; c++) {
                   detailsAry.push(
-                    <li>
-                      <div>{details[c].name}</div>
-                      <span>{details[c].value}</span></li>
+                      <li>
+                        <div>{details[c].name}</div>
+                        <span>{details[c].value}</span></li>
                   );
                 }
                 remind = deliverTypeTempls[j].remind;
               }
             }
           }
-          deliverySub.push(
-            <li className={subClass}>
-              <span>{deliverTypeTempls[j].name}</span>
-              <select onChange={this.deliverySelect.bind(this,deliverTypeTempls,deliverTypeTempls[j].deliverType)}>{picUpAry}</select>
-            </li>
-          );
-
-        }else{
-          deliverySub.push(
-            <li className={subClass} onClick={this.deliverySelect.bind(this,deliverTypeTempls,deliverTypeTempls[j].deliverType)}>
-              <span>{deliverTypeTempls[j].name}</span>
-            </li>
-          );
+          if(!maxList) {
+            deliverySub.push(
+                <li className={subClass}>
+                  <span>{deliverTypeTempls[j].name}<em></em></span>
+                  <select
+                      onChange={this.deliverySelect.bind(this,deliverTypeTempls,deliverTypeTempls[j].deliverType)}>{picUpAry}</select>
+                </li>
+            );
+          }
         }
       }
       deliverySection.push(
