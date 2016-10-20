@@ -34,7 +34,7 @@ class SettlementZiTiForm extends React.Component {
         <div className='title-line'>
           <span className='left-area secoo_icon_guanbi' onClick={()=>this.props.close('card')}></span>输入身份证号
         </div>
-        <SettlementInput data={{placeholder:'请输入收货人身份证号',refName:'cardNo',value:datas.cardNo,focus:true}} ref='name' haddleInput={this.haddleInput}/>
+        <SettlementInput data={{placeholder:'请输入收货人身份证号',refName:'cardNo',value:datas.cardNo,focus:true,maxlength:18}} ref='name' haddleInput={this.haddleInput}/>
         <a href='javascript:;' className={this.btnClass()}  onClick={()=>this.props.saveAddressClick(datas)} ref="btnZiTi" >确定</a>
       </div>
     );

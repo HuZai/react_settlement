@@ -11,10 +11,11 @@ class SettlementInput extends React.Component {
       this.refs[this.props.data.refName].focus();
     }
   }
+
   render() {
     let datas=this.props.data;
     return (
-      <input className='mixin-input mt20' type='text' placeholder={datas.placeholder} ref={datas.refName} defaultValue={datas.value} onInput={this.props.haddleInput.bind(this,datas.refName)}/>
+      <input className='mixin-input mt20' type='text' placeholder={datas.placeholder} ref={datas.refName} defaultValue={datas.value} onInput={this.props.haddleInput.bind(this,datas.refName)} maxLength={datas.maxlength?datas.maxlength:''} />
     );
   }
 }
