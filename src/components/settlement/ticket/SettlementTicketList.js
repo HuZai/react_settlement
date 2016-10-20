@@ -62,7 +62,16 @@ class SettlementTicketList extends React.Component {
     settementAction.getData(carts,function(data){
       if(data.retCode==0){
         data.otherInfo=null;
-        this.setState(data);
+        alert("激活成功");
+        _t.setState(data);
+        if(data.ticket.ticketSn && data.ticket.ticketId){
+          _t.context.router.replace(
+            {pathname: '/index.html',
+              query: {cart:carts},
+              state: _t.state
+            }
+          )
+        }
       }else if(data.retMsg){
         alert(data.retMsg)
       }
