@@ -16,11 +16,11 @@ class SettlementFooter extends React.Component {
   btnDiv(){
     let btn=[];
     if(this.state.btnState==0){//可单击
-      btn.push(<span>提交</span>);
+      btn.push(<span>提交订单</span>);
     }else if(this.state.btnState==1){//提交中。。。
       btn.push(<span>提交...</span>);
     }else {
-      btn.push(<span>提交</span>);
+      btn.push(<span>提交订单</span>);
     }
     return btn;
   }

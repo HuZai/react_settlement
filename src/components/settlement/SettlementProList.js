@@ -10,6 +10,21 @@ class SettlementProList extends React.Component{
   backClick(){
     this.context.router.goBack();
   }
+  speciMessage(_index){
+    let dataS=this.state.commonCartItems[_index],message='';
+    if(dataS.isSpecialProductAsTicket || dataS.isSpecificForUserDiscount){
+      if(dataS.isSpecialProductAsTicket){
+        if(dataS.isSpecificForUserDiscount){
+          message='此特例品不参与优惠券和会员折扣活动';
+        }else{
+          message='此特例品不参与优惠券活动';
+        }
+      }else{
+        message='此特例品不参与会员折扣活动';
+      }
+    }
+    alert(message);
+  }
   render(){
     let state = this.state,proItemAry = [],presentItemAry = [];
     let commonCartItems = state.commonCartItems || [],
@@ -25,7 +40,7 @@ class SettlementProList extends React.Component{
                 <div className="info-mixin">数量:x{commonCartItems[i].quantity}&nbsp;{commonCartItems[i].spec}</div>
               </div>
               <div className="info-wrap">
-                {commonCartItems[i].isSpecificForUserDiscount?<div className="info-special">特殊商品<span className="secoo_icon_Artboard-3"></span></div>:""}
+                {(commonCartItems[i].isSpecialProductAsTicket || commonCartItems[i].isSpecificForUserDiscount)?<div className="info-special" onClick={this.speciMessage.bind(this,[i])}>特例品 <span className="secoo_icon_Artboard-3"><span className="path1"></span><span className="path2"></span><span className="path3"></span></span></div>:""}
                 <div className="info-amount">{commonCartItems[i].nowPrice}</div>
               </div>
             </div>
