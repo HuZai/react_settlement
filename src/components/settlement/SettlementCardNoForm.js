@@ -20,7 +20,7 @@ class SettlementZiTiForm extends React.Component {
   }
   btnClass(){
       let classArray=['secoo_btn','secoo_btn_default'];
-      if(this.state.cardNo && this.state.cardNo.length==18){
+      if(this.state.cardNo && this.state.cardNo.length>=18){
 
       }else{
         classArray.push('disabled');

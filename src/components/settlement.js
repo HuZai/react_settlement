@@ -220,7 +220,7 @@ class Settlement extends React.Component {
           }
         })
       }else if(data.type=="card"){
-        if(data.cardNo && data.cardNo.length==18){
+        if(data.cardNo && data.cardNo.length>=18){
           settementAction.getData(webCommon.setSettlemntParam({"customsParam":{"cardNo":data.cardNo}}),function(res){
             if(res.retCode==0){
               res.otherInfo={};
