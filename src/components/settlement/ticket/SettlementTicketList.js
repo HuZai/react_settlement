@@ -106,7 +106,7 @@ class SettlementTicketList extends React.Component {
       ticketList.push(
         <div className='unable-ticket-tips' key="unable">
           <div>不可用优惠券</div>
-          <span>（订单中的特例品不参与优惠券活动）</span>
+          {data.canotUseTicketDesc?<span>({data.canotUseTicketDesc})</span>:""}
         </div>);
       ticketList.push(
         <div className='ticket-list unable-ticket-list' key="list1">

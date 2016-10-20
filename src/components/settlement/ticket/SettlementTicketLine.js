@@ -29,7 +29,7 @@ class SettlementTicketList extends React.Component{
     }
     let descHtml = <em className={isUrgent?"red":""}>{desc}</em>;
     return <li onClick={this.selectClick.bind(this,data.ticketId)} className='ticket-item'>
-      <div className='ticket-amount'>&yen;{data.amount}</div>
+      <div className='ticket-amount'><div><span className="yen-show">&yen;</span>{data.amount}</div></div>
       <div className='ticket-box'>
         <div className='ticket-info'>
           <div>{data.name}</div>
