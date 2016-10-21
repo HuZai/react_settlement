@@ -19,7 +19,7 @@ class SettlementTicketList extends React.Component {
     let _t=this;
     if(this.state.ticket.seleted==true){
       _t.context.router.replace(
-        {pathname: '/index.html',
+        {pathname: '/reactSettlement/index.html',
           query: { cart: webCommon.setSettlemntParam({"ticketParam":{"ticketId":_t.getSelectData().ticketId}})},
           state: _t.state
         }
@@ -66,7 +66,7 @@ class SettlementTicketList extends React.Component {
         _t.setState(data);
         if(data.ticket.ticketSn && data.ticket.ticketId){
           _t.context.router.replace(
-            {pathname: '/index.html',
+            {pathname: '/reactSettlement/index.html',
               query: {cart:carts},
               state: _t.state
             }

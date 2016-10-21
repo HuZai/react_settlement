@@ -40,7 +40,7 @@ class SettlementReceiptMain extends React.Component {
     }
     invoiceParam.invoiceType=invoice.invoiceType;
     _t.context.router.replace(
-      {pathname: '/index.html',
+      {pathname: '/reactSettlement/index.html',
         query: { cart: webCommon.setSettlemntParam({"invoiceParam":invoiceParam})}
         //state: {shippingInfo:{zitiForm:false},customsInfo:{showCardForm:false}}
       }

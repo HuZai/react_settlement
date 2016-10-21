@@ -298,9 +298,33 @@ class Settlement extends React.Component {
     cart.invoiceParam=dataJson.invoice.invoiceParam;
     cart.shippingParam.shippingId=dataJson.shippingInfo.shippingId;
     cart.ticketParam.ticketId=dataJson.ticket.ticketId;
+    console.log(cart.deliverTypeParam)
+    if(!(cart.deliverTypeParam && cart.deliverTypeParam.length>0)){
+      let chooseDeliverTypes=dataJson.deliverType.chooseDeliverTypes;
+      for(let i = 0; i < chooseDeliverTypes.length; i++){
+        paramAry[i] = {
+          deliverTypeId:chooseDeliverTypes[i].deliverTypeId
+        };
+        let deliverTypeTempls = chooseDeliverTypes[i].deliverTypeTempls;
+        for(let j = 0; j < deliverTypeTempls.length; j++){
+          if(deliverTypeTempls[j].isChoose){
+            paramAry[i].deliverType = deliverTypeTempls[j].deliverType;
+            if(deliverTypeTempls[j].deliverType == 0){
+              let pickUpList = deliverTypeTempls[j].pickUpList;
+              for(let k = 0; k < pickUpList.length; k++){
+                if(pickUpList[k].isChoose){
+                  paramAry[i].vendorWarehouseId = pickUpList[k].vendorWarehouseId;
+                }
+              }
+            }
+          }
+        }
+      }
+      cart.deliverTypeParam=paramAry;
+    }
+    console.log(cart);
     //let res={exceptionInventoryList:[{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0},{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0},{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0}]};
     //_t.setState({otherInfo:{exceptionInventoryList:res.exceptionInventoryList}});
-    //return false ;
     settementAction.commitData(JSON.stringify(cart),function(res){
       _t.setState({btnState:0});
       if(res.retCode==0){
