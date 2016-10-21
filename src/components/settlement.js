@@ -258,7 +258,7 @@ class Settlement extends React.Component {
       switch (type){
         case '0'://配送
           this.context.router.push(
-            {pathname: '/delivery?cart='+cart,
+            {pathname: '/deliveryForReact?cart='+cart,
               state: this.state
             }
           )
@@ -268,21 +268,21 @@ class Settlement extends React.Component {
               break;
         case '2'://优惠券
           this.context.router.push(
-            {pathname: '/SettlementTicketList?cart='+cart,
+            {pathname: '/SettlementTicketListForReact?cart='+cart,
               state: this.state
             }
           )
           break;
         case '3'://发票
           this.context.router.push(
-            {pathname: '/receipt?cart='+cart,
+            {pathname: '/receiptForReact?cart='+cart,
               state: this.state
             }
           )
           break;
         case '4'://多组商品列表
           this.context.router.push(
-            {pathname: '/SettlementProList?cart='+cart,
+            {pathname: '/SettlementProListForReact?cart='+cart,
               state: this.state
             }
           )

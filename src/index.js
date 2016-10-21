@@ -15,12 +15,10 @@ import InvalideProList from './components/settlement/InvalideProList';
 render(
   <Router history={browserHistory}>
     <Route path="/*.html(:cart)" component={App} />
-    <Route path="/header" component={Header}/>
-    <Route path="/SettlementTicketList(:cart)" component={SettlementTicketList}/>
-    <Route path="/delivery(:cart)" component={SettlementDeliveryMain}/>
-    <Route path="/SettlementProList(:cart)" component={SettlementProList}/>
-    <Route path="/receipt(:cart)" component={SettlementReceiptMain}/>
-    <Route path="/invalide(:cart)" component={InvalideProList}/>
+    <Route path="/SettlementTicketListForReact(:cart)" component={SettlementTicketList}/>
+    <Route path="/deliveryForReact(:cart)" component={SettlementDeliveryMain}/>
+    <Route path="/SettlementProListForReact(:cart)" component={SettlementProList}/>
+    <Route path="/receiptForReact(:cart)" component={SettlementReceiptMain}/>
   </Router>
   , document.getElementById('main-page-view')
 );
