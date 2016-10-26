@@ -31,7 +31,7 @@ var SettementData = {
     var headerJson={
       'upk':getCookie('Sid'),
       'c_app_ver':'5.6.0',
-      'channel':getCookie('channel'),
+      'c_channel':getCookie('channel'),
       'c_platform_type':'2'
     }
    ;
