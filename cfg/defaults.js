@@ -46,7 +46,7 @@ function getDefaultModules() {
 module.exports = {
   srcPath: srcPath,
   //publicPath: './',
-  publicPath: '',
+  publicPath: '/react_settlement1/',
   port: dfltPort,
   getDefaultModules: getDefaultModules,
   postcss: function () {
