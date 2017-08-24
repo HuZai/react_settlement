@@ -29,9 +29,9 @@ class Settlement extends React.Component {
     this.btnClick=this.btnClick.bind(this);
   }
   init(){
-    let dataJson=this.state;
+    let dataJson=Object.assign({},this.state);
     let items=[],footerPrice=[],otherItems=[];
-    if(dataJson && dataJson.retCode==0){
+    if(dataJson && (dataJson.retCode==0 || dataJson.retCode==500 )){
         items.push(<div className="mt20"></div>);
         if(dataJson.isLoading){
           items.push(
@@ -121,7 +121,6 @@ class Settlement extends React.Component {
         <div className="page-view selected">
           <Header data={{title:'结算中心'}} key='header_0'/>
           <div className='page-content' key='box'>
-
             {items}
           </div>
           <div>
@@ -182,14 +181,28 @@ class Settlement extends React.Component {
   }
   componentDidMount(){
     let dataJson,_t=this;
+    console.log('--DidMount--')
     //if(this.props.location.state){
     //  dataJson=this.props.location.state.data;
     //  this.setState(dataJson);
     //}else{
-     let cart=webCommon.getQueryString('cart');
+     let cart=webCommon.getQueryString('cart'),
+       prodId=webCommon.getQueryString('prodId'),
+    addFrom=webCommon.getQueryString('addFrom');
       cart=cart?cart:this.cartParam;
+      if(prodId){
+        let newCartProd=JSON.parse(this.cartParam)
+        newCartProd.cartItemParam=[{addFrom:addFrom,productId:prodId,quantity:1,checkedService:''}]
+        newCartProd.cartType=9
+        cart=JSON.stringify(newCartProd)
+      }
+    console.log(cart)
       settementAction.getData(cart,function(res){
         if(res.retCode==0){
+          res=_t.dataPriceAction(res);
+          res.isLoading=false;
+          _t.setState(res);
+        }else if(res.retCode==500){
           res=_t.dataPriceAction(res);
           res.isLoading=false;
           _t.setState(res);
@@ -258,7 +271,7 @@ class Settlement extends React.Component {
       switch (type){
         case '0'://配送
           this.context.router.push(
-            {pathname: '/deliveryForReact?cart='+cart,
+            {pathname: 'deliveryForReact?cart='+cart,
               state: this.state
             }
           )
@@ -268,21 +281,21 @@ class Settlement extends React.Component {
               break;
         case '2'://优惠券
           this.context.router.push(
-            {pathname: '/SettlementTicketListForReact?cart='+cart,
+            {pathname: 'SettlementTicketListForReact?cart='+cart,
               state: this.state
             }
           )
           break;
         case '3'://发票
           this.context.router.push(
-            {pathname: '/receiptForReact?cart='+cart,
+            {pathname: 'receiptForReact?cart='+cart,
               state: this.state
             }
           )
           break;
         case '4'://多组商品列表
           this.context.router.push(
-            {pathname: '/SettlementProListForReact?cart='+cart,
+            {pathname: 'SettlementProListForReact?cart='+cart,
               state: this.state
             }
           )

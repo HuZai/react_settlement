@@ -29,7 +29,7 @@ class SettlementDeliveryConfirm extends React.Component{
       }
     }
     _t.context.router.push(
-      {pathname: '/reactSettlement/index.html',
+      {pathname: '/index.html',
         query: { cart: webCommon.setSettlemntParam({deliverTypeParam:paramAry})}
         //state: {shippingInfo:{zitiForm:false},customsInfo:{showCardForm:false}}
       }

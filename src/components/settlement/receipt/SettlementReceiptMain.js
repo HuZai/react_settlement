@@ -1,5 +1,7 @@
 import React from 'react';
+import {render} from 'react-dom';
 import ReceiptHeader from 'components/settlement/receipt/SettlementReceiptHeader';
+import ReceiptLayer from 'components/settlement/receipt/SettlementReceiptLayer';
 import ReceiptItem from 'components/settlement/receipt/SettlementReceiptItem';
 import webCommon from 'actions/common';
 class SettlementReceiptMain extends React.Component {
@@ -34,13 +36,14 @@ class SettlementReceiptMain extends React.Component {
     var invoice = this.getSelectData(), invoiceParam={},_t=this;
     if(invoice.invoiceType == 1){
       invoiceParam.invoiceTitle=this.refs.companyInput.value;
-      if(invoiceParam.invoiceTitle.length<2){
+      invoiceParam.invoiceNorCode=this.refs.NorCodeInput.value;
+      if(invoiceParam.invoiceTitle.length<2 || invoiceParam.invoiceNorCode.length==0){
         return;
       }
     }
     invoiceParam.invoiceType=invoice.invoiceType;
     _t.context.router.replace(
-      {pathname: '/reactSettlement/index.html',
+      {pathname: '/index.html',
         query: { cart: webCommon.setSettlemntParam({"invoiceParam":invoiceParam})}
         //state: {shippingInfo:{zitiForm:false},customsInfo:{showCardForm:false}}
       }
@@ -56,19 +59,38 @@ class SettlementReceiptMain extends React.Component {
     datas.invoiceParam.invoiceTitle=this.refs.companyInput.value;
     this.setState(datas);
   }
+  codeInput(){
+     var codeVal = this.refs.NorCodeInput.value.replace(/\s/g, "");
+    codeVal = codeVal.replace(/[\u4e00-\u9fa5]/g,"");
+     // if(codeVal.length > 20){
+     //    codeVal = codeVal.substr(0,20);
+     // }
+    this.refs.NorCodeInput.value = codeVal;
+  }
+  NorCodeChange() {
+    let datas=this.state,invoiceParam = datas.invoiceParam;
+    invoiceParam.invoiceNorCode=this.refs.NorCodeInput.value;
+    this.setState(datas);
+  }
   setBtnState(){
       let btnClass=['secoo_btn','secoo_btn_default'];
       if(this.state.invoiceParam.invoiceType=='1'){
-        if(!(this.state.invoiceParam.invoiceTitle && this.state.invoiceParam.invoiceTitle.length>1)){
+        if(!(this.state.invoiceParam.invoiceTitle && this.state.invoiceParam.invoiceTitle.length>1) || !(this.state.invoiceParam.invoiceNorCode && this.state.invoiceParam.invoiceNorCode.length>0)){
           btnClass.push('disabled')
         }
 
       }
     return btnClass.join(' ');
   }
+  receiptLayerClick() { // 纳税人识别号说明
+    render(
+    <ReceiptLayer data={this.state}/>,
+    document.getElementById("receipt-layer"));
+  }
   render(){
     let data = this.state,
       invoiceTypeList = data.invoiceTypeList,
+      invoiceParam = data.invoiceParam,
       receiptItems = [];
     for(let i = 0; i < invoiceTypeList.length;i++){
       let company = invoiceTypeList[i].invoiceType == 1;
@@ -79,6 +101,10 @@ class SettlementReceiptMain extends React.Component {
         receiptItems.push(
           <div className="company-input selected">
             <input className="mixin-input" defaultValue={invoiceTypeList[i].invoiceTitle} onInput={()=>this.companyChange()} ref="companyInput" type="text" placeholder="请输入公司发票抬头"/>
+            <div className="invoiceNorCode">
+            <input className="mixin-input" defaultValue={invoiceParam.invoiceNorCode} onInput={()=>this.codeInput()} onChange={()=>this.NorCodeChange()} ref="NorCodeInput" type="text" placeholder="请输入纳税人识别号"/>
+            <div onClick={this.receiptLayerClick.bind(this)}></div>
+            </div>
           </div>
         );
       }
@@ -98,6 +124,7 @@ class SettlementReceiptMain extends React.Component {
           </div>
         </div>
         <div id="receipt-pops"></div>
+        <div id="receipt-layer"></div>
       </div>
     )
   }

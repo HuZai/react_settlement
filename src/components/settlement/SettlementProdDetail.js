@@ -46,7 +46,7 @@ class SettlementProdDetail extends React.Component {
         if(datas.isSpecialProductAsTicket || datas.isSpecificForUserDiscount){
             prodBox.push(
               <div className='info-special' onClick={() => this.handleClick(this.specialMessage().message)}>
-                特例品  <span className='secoo_icon_Artboard-3'>
+                特例品 <span className='secoo_icon_Artboard-3'>
                       <span className="path1"></span>
                       <span className="path2"></span>
                       <span className="path3"></span>
