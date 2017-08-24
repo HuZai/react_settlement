@@ -21,7 +21,9 @@ module.exports = {
   },
   devServer: {
     contentBase: './src/',
-    historyApiFallback: true,
+    historyApiFallback:{
+      "index":defaultSettings.publicPath
+    },
     inline: true,
     hot: true,
     port: defaultSettings.port,
