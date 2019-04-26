@@ -215,7 +215,7 @@ class Settlement extends React.Component {
   //
   addressUpdate(data){
       if(data && !data.onlyPickup){
-        window.location.href='http://m.secoo.com/appActivity/mShipAddress.shtml?cart='+webCommon.setSettlemntParam({"shippingParam":{"shippingId":data.shippingId}});
+        window.location.href='/appActivity/mShipAddress.shtml?cart='+webCommon.setSettlemntParam({"shippingParam":{"shippingId":data.shippingId}});
       }else{
         this.setState({otherInfo:{zitiForm:true}});
       }
@@ -336,15 +336,12 @@ class Settlement extends React.Component {
       cart.deliverTypeParam=paramAry;
     }
     console.log(cart);
-    //let res={exceptionInventoryList:[{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0},{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0},{"image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg","productId":15932046,"quantity":1,"name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674","status":0}]};
-    //_t.setState({otherInfo:{exceptionInventoryList:res.exceptionInventoryList}});
     settementAction.commitData(JSON.stringify(cart),function(res){
       _t.setState({btnState:0});
       if(res.retCode==0){
         if(res.exceptionInventoryList && res.exceptionInventoryList.length>0){
              _t.setState({otherInfo:{exceptionInventoryList:res.exceptionInventoryList}});
         }else{
-          //window.location.href='http://m.secoo.com/appActivity/mPayment.shtml?orderId='+res.order.orderId+'&prodTotalPrice='+res.order.totalPay;
           window.history.replaceState('', "", "/appActivity/mPayment.shtml?orderId="+res.order.orderId+'&prodTotalPrice='+res.order.totalPay);
           window.history.go();
         }
