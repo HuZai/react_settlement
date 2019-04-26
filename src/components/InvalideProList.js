@@ -4,7 +4,7 @@ class InvalideProList extends React.Component{
   constructor(props){
     super(props)
     this.state = {exceptionInventoryList:[{
-      "image":"http://pic11.secooimg.com/product/500/500/20/46/15932046.jpg",
+      "image":"/product/500/500/20/46/15932046.jpg",
       "productId":15932046,
       "quantity":1,
       "name":"GUCCI/古驰女士帆布时尚印花单肩包400249KHNRN9674",
